@@ -3,9 +3,10 @@ const router = require ('express').Router();
 const controller = require ('./controller.js');
 
 router
-.route('/todo')
+.route('/todos')
 .get(controller.get)
 .post(controller.post)
-.delete(controller.delete);
+.delete(controller.delete)
+.patch(controller.patch)
 
 module.exports = router;

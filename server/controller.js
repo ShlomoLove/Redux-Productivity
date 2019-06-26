@@ -12,9 +12,12 @@ module.exports = {
   },
 
   post: (req, res) => {
-    const task = req.body.task;
+    console.log (req.body)
+    const text = req.body.text;
+    const completed = req.body.completed;
+    const id = req.body.id;
     new db ({
-      task
+      id, text, completed
     }).save((error, data) => {
       if (error) {
         console.log(error);
@@ -26,12 +29,28 @@ module.exports = {
 
   delete: (req, res) => {
     const str = req.body.task;
-    db.deleteOne({task: str}, (error, data) => {
+    db.deleteOne({text: str}, (error, data) => {
       if (error) {
         console.log (error)
       } else {
         res.status(202).send('task deleted');
       }
+    })
+  },
+
+  patch: (req, res) => {
+    let checkId = req.body.params.id;
+    let newCompleted = req.body.params.completed;
+    db.update (
+      {id: checkId},
+      {$set: {completed: newCompleted}}
+    )
+    .then(() => {
+      console.log ('completed update')
+      res.status(201).send('successful update');
+    })
+    .catch((error) => {
+      res.status(404).send(error);
     })
   }
 }

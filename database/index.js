@@ -9,7 +9,9 @@ db.on('error', () => console.log(`connection error`));
 db.once ('open', () => console.log (`successfully connected to database`));
 
 const ReduxList = mongoose.Schema({
-  task: String,
+  id: Number,
+  text: String,
+  completed: Boolean
 })
 
 const ReduxTodo = mongoose.model('ReduxTodo', ReduxList);
